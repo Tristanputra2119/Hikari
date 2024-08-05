@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" data-name="vs/editor/editor.main" href="./min/vs/editor/editor.main.css" />
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        #container {
+            height: 100%;
+        }
+
+        @media(prefers-color-scheme: dark) {
+            body {
+                background-color: #1E1E1E;
+            }
+        }
+
+        @media(prefers-color-scheme: light) {
+            body {
+                background-color: #fffffe;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script src="./min/vs/loader.js"></script>
+    <script>
+        require.config({ paths: { 'vs': './min/vs' } });
+    </script>
+    <script src="./min/vs/editor/editor.main.nls.js"></script>
+    <script src="./min/vs/editor/editor.main.js"></script>
+    <script>
+        let param = document.location.search.substring(1);
+        let param_list = param.split('&');
+        let params = {};
+        for (let i = 0; i < param_list.length; i++) {
+            let elem = param_list[i].split('=');
+            params[elem[0]] = elem[1];
+        }
+        let b64file = params["file"];
+        let b64src = params["src"];
+        let extension = params["extension"];
+        let lang;
+        let theme = params["theme"];
+        if (theme === undefined) theme = "vs-dark";
+        extensions = {
+            ".rb": "ruby",
+            ".py": "python",
+            ".txt": "plaintext",
+            ".bat": "bat",
+            ".c": "c",
+            ".cpp": "cpp",
+            ".cs": "csharp",
+            ".css": "css",
+            ".go": "go",
+            ".html": "html",
+            ".htm": "htm",
+            ".ini": "ini",
+            ".java": "java",
+            ".js": "javascript",
+            ".md": "markdown",
+            ".markdown": "markdown",
+            ".rs": "rust",
+            ".pl": "perl",
+            ".php": "php",
+            ".r": "r",
+            ".ts": "typescript",
+            ".scss": "scss",
+            ".xml": "xml",
+            ".xaml": "xml",
+            ".yaml": "yaml",
+            ".json": "json",
+            ".vb": "vb",
+            ".h": "c",
+            ".tex": "latex"
+        }
+        lang = extensions[extension];
+        if (lang === undefined) lang = null;
+        let editor = monaco.editor.create(document.getElementById('container'), {
+            value: "",
+            language: lang,
+            theme: theme,
+            automaticLayout: true
+        });
+        monaco.languages.register({ id: 'latex' });
+        monaco.languages.setMonarchTokensProvider("latex", {
+            /* Apache License, Version 2.0 */
+            /* https://github.com/koka-lang/madoko */
+            "displayName": "Latex",
+            "name": "latex",
+            "mimeTypes": ["text/latex", "text/tex"],
+            "fileExtensions": ["tex", "sty", "cls"],
+
+            "lineComment": "% ",
+
+            "builtin": [
+                "addcontentsline", "addtocontents", "addtocounter", "address", "addtolength", "addvspace", "alph", "appendix",
+                "arabic", "author", "backslash", "baselineskip", "baselinestretch", "bf", "bibitem", "bigskipamount", "bigskip",
+                "boldmath", "boldsymbol", "cal", "caption", "cdots", "centering", "chapter", "circle", "cite", "cleardoublepage",
+                "clearpage", "cline", "closing", "color", "copyright", "dashbox", "date", "ddots", "documentclass", "dotfill", "em",
+                "emph", "ensuremath", "epigraph", "euro", "fbox", "flushbottom", "fnsymbol", "footnote", "footnotemark",
+                "footnotesize", "footnotetext", "frac", "frame", "framebox", "frenchspacing", "hfill", "hline", "href", "hrulefill",
+                "hspace", "huge", "Huge", "hyphenation", "include", "includegraphics", "includeonly", "indent", "input", "it", "item",
+                "kill", "label", "large", "Large", "LARGE", "LaTeX", "LaTeXe", "ldots", "left", "lefteqn", "line", "linebreak",
+                "linethickness", "linewidth", "listoffigures", "listoftables", "location", "makebox", "maketitle", "markboth",
+                "mathcal", "mathop", "mbox", "medskip", "multicolumn", "multiput", "newcommand", "newcolumntype", "newcounter",
+                "newenvironment", "newfont", "newlength", "newline", "newpage", "newsavebox", "newtheorem", "nocite", "noindent",
+                "nolinebreak", "nonfrenchspacing", "normalsize", "nopagebreak", "not", "onecolumn", "opening", "oval", "overbrace",
+                "overline", "pagebreak", "pagenumbering", "pageref", "pagestyle", "par", "paragraph", "parbox", "parindent", "parskip",
+                "part", "protect", "providecommand", "put", "raggedbottom", "raggedleft", "raggedright", "raisebox", "ref",
+                "renewcommand", "right", "rm", "roman", "rule", "savebox", "sbox", "sc", "scriptsize", "section", "setcounter",
+                "setlength", "settowidth", "sf", "shortstack", "signature", "sl", "slash", "small", "smallskip", "sout", "space", "sqrt",
+                "stackrel", "stepcounter", "subparagraph", "subsection", "subsubsection", "tableofcontents", "telephone", "TeX",
+                "textbf", "textcolor", "textit", "textmd", "textnormal", "textrm", "textsc", "textsf", "textsl", "texttt", "textup",
+                "textwidth", "textheight", "thanks", "thispagestyle", "tiny", "title", "today", "tt", "twocolumn", "typeout", "typein",
+                "uline", "underbrace", "underline", "unitlength", "usebox", "usecounter", "uwave", "value", "vbox", "vcenter", "vdots",
+                "vector", "verb", "vfill", "vline", "vphantom", "vspace",
+
+                "RequirePackage", "NeedsTeXFormat", "usepackage", "input", "include", "documentclass", "documentstyle",
+                "def", "edef", "defcommand", "if", "ifdim", "ifnum", "ifx", "fi", "else", "begingroup", "endgroup",
+                "definecolor", "textcolor", "color",
+                "eifstrequal", "eeifstrequal"
+            ],
+            "tokenizer": {
+                "root": [
+                    ["(\\\\begin)(\\s*)(\\{)([\\w\\-\\*\\@]+)(\\})",
+                        ["keyword.predefined", "white", "@brackets", { "token": "tag.env-$4", "bracket": "@open" }, "@brackets"]],
+                    ["(\\\\end)(\\s*)(\\{)([\\w\\-\\*\\@]+)(\\})",
+                        ["keyword.predefined", "white", "@brackets", { "token": "tag.env-$4", "bracket": "@close" }, "@brackets"]],
+                    ["\\\\[^a-zA-Z@]", "keyword"],
+                    ["\\@[a-zA-Z@]+", "keyword.at"],
+                    ["\\\\([a-zA-Z@]+)", {
+                        "cases": {
+                            "$1@builtin": "keyword.predefined",
+                            "@default": "keyword"
+                        }
+                    }],
+                    { "include": "@whitespace" },
+                    ["[{}()\\[\\]]", "@brackets"],
+                    ["#+\\d", "number.arg"],
+                    ["\\-?(?:\\d+(?:\\.\\d+)?|\\.\\d+)\\s*(?:em|ex|pt|pc|sp|cm|mm|in)", "number.len"]
+                ],
+
+                "whitespace": [
+                    ["[ \\t\\r\\n]+", "white"],
+                    ["%.*$", "comment"]
+                ]
+            }
+        });
+        let tmp_src = "";
+        open_file(b64file);
+
+        setInterval(autosave, 1000);
+        function file_load(b64src) {
+            let src = atob(b64src);
+            editor.setValue(src);
+        }
+
+        function autosave() {
+            let src = editor.getValue();
+            if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+                monaco.editor.setTheme("vs-light")
+            } else {
+                monaco.editor.setTheme("vs-dark")
+            }
+            src = src.replace(/\r\n/g, "\n");
+            if (tmp_src != src) {
+                if (tmp_src == "") {
+                    tmp_src = src;
+                    return;
+                }
+                tmp_src = src;
+                let b64src = btoa(src);
+                const xhr = new XMLHttpRequest();
+                let data = btoa(`autosave ${b64file}`);
+                xhr.open('POST', `http://127.0.0.1:8086?data=${data}`, true);
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        console.log(xhr.responseText);
+                    } else {
+                        console.log('Request failed.  Returned status of ' + xhr.status);
+                    }
+                };
+                xhr.send(b64src);
+            }
+        }
+
+        function open_file(b64file) {
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', `http://127.0.0.1:8086?open=${b64file}`);
+            xhr.onload = () => {
+                a = xhr;
+                if (xhr.status === 200) {
+                    let b64src = xhr.responseText
+                    log = "=== READ ===\n"
+                    log += atob(b64src);
+                    log += "\n============"
+                    console.log(log)
+                    file_load(b64src);
+                } else {
+                    console.log('Request failed.  Returned status of ' + xhr.status);
+                }
+            }
+            xhr.send();
+        }
+
+        document.addEventListener("keydown", () => {
+            let src = editor.getValue();
+            src = src.replace(/\r\n/g, "\n");
+            let b64src = btoa(src);
+            if (event.ctrlKey && event.key === 's') {
+                event.preventDefault();
+                const xhr = new XMLHttpRequest();
+                let data = btoa(`save ${b64file}`);
+                console.log(b64src);
+                xhr.open('POST', `http://127.0.0.1:8086?data=${data}`, true);
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        console.log(xhr.responseText);
+                    } else {
+                        console.log('Request failed.  Returned status of ' + xhr.status);
+                    }
+                };
+                xhr.send(b64src);
+            }
+        })
+
+        paste_text = (base64_text) => {
+            let text = atob(base64_text);
+            const selection = editor.getSelection();
+            if (!selection) return;
+            editor.executeEdits("clipboard", [{
+                range: selection,
+                text: text,
+                forceMoveMarkers: true,
+            }]);
+            console.log(text);
+        }
+
+        copy_text = () => {
+            let text = editor.getModel().getValueInRange(editor.getSelection());
+            if (text == "") return;
+            text = text.replace(/\r\n/g, "\n");
+            console.log(text);
+            const xhr = new XMLHttpRequest();
+            let data = btoa(`copy-clipboard ${b64file}\n${text}`);
+            xhr.open('POST', `http://127.0.0.1:8086?data=${data}`, true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText);
+                } else {
+                    console.log('Request failed.  Returned status of ' + xhr.status);
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+
+</html>
