@@ -6,8 +6,8 @@ Hikari Editor is built using the .NET framework as the base language, Edge WebVi
 
 This project is inspired by the UI design of [Himeyama](https://github.com/himeyama) on GitHub.
 
-![Hikari Editor Screenshot](Assets/Hikari.Jpg)## Prerequisites
-
+![Hikari Editor Screenshot](https://github.com/Tristanputra2119/Hikari/blob/main/HikariEditor/Hikari.Jpg)
+## Prerequisites
 Before you begin, make sure you have installed the following:
 
 - **Windows App Runtime**
