@@ -8,6 +8,7 @@
     mc:Ignorable="d">
 
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <TextBlock Text="©2024 Test" Margin="0, 8, 0, 0" />
+        <TextBlock Text="This project recommendation is based on a GitHub project called HikariEditor by Himeyama. I have remade it to improve the design and language. ©Himeyama and Trinzx" Margin="0,8,0,8" TextWrapping="Wrap" />
     </StackPanel>
+
 </Page>

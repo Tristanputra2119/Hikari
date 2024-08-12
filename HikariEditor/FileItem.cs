@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using SharpCompress.Common;
 using SharpCompress.Readers;
 using System.IO;
@@ -55,26 +56,24 @@ namespace HikariEditor
                 if (Directory.Exists(Dirname))
                 {
                     if (!Directory.Exists(Path))
-                        using (File.Create(Path))
-                        {
-                            ;
-                        }
+                    {
+                        using (File.Create(Path)) { }
+                    }
                     else
                     {
-                        Error.Dialog("作成失敗", "同名のフォルダが存在しています。", mainWindow.Content.XamlRoot);
+                        ShowErrorDialog("Creation Failed", "A folder with the same name already exists.", mainWindow.Content.XamlRoot);
                         return false;
                     }
                 }
                 else
                 {
-                    Error.Dialog("作成失敗", "選択している項目はフォルダではありません。", mainWindow.Content.XamlRoot);
+                    ShowErrorDialog("Creation Failed", "The selected item is not a folder.", mainWindow.Content.XamlRoot);
                     return false;
                 }
-
             }
             else
             {
-                Error.Dialog("作成失敗", "同名のファイルが既に存在しています。", mainWindow.Content.XamlRoot);
+                ShowErrorDialog("Creation Failed", "A file with the same name already exists.", mainWindow.Content.XamlRoot);
                 return false;
             }
             return true;
@@ -86,7 +85,7 @@ namespace HikariEditor
             {
                 if (File.Exists(Path))
                 {
-                    Error.Dialog("作成失敗", "同名のファイルが既に存在しています。", mainWindow.Content.XamlRoot);
+                    ShowErrorDialog("Creation Failed", "A file with the same name already exists.", mainWindow.Content.XamlRoot);
                     return false;
                 }
                 else
@@ -96,7 +95,7 @@ namespace HikariEditor
             }
             else
             {
-                Error.Dialog("作成失敗", "同名のフォルダが既に存在しています。", mainWindow.Content.XamlRoot);
+                ShowErrorDialog("Creation Failed", "A folder with the same name already exists.", mainWindow.Content.XamlRoot);
                 return false;
             }
             return true;
@@ -147,6 +146,27 @@ namespace HikariEditor
                 }
             }
             else return;
+        }
+
+        private async void ShowErrorDialog(string title, string content, XamlRoot xamlRoot)
+        {
+            ContentDialog dialog = new ContentDialog
+            {
+                Title = title,
+                Content = content,
+                CloseButtonText = "OK",
+                XamlRoot = xamlRoot
+            };
+
+            dialog.KeyUp += (sender, e) =>
+            {
+                if (e.Key == Windows.System.VirtualKey.Escape)
+                {
+                    dialog.Hide(); 
+                }
+            };
+
+            await dialog.ShowAsync();
         }
     }
 }

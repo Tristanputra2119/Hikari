@@ -167,7 +167,7 @@ namespace HikariEditor
             ContentDialog dialog = new();
             NewFile content = new();
             dialog.XamlRoot = Content.XamlRoot;
-            dialog.Title = "ファイル作成";
+            dialog.Title = "New File";
             dialog.PrimaryButtonText = "OK";
             dialog.DefaultButton = ContentDialogButton.Primary;
             dialog.Content = content;
@@ -194,7 +194,7 @@ namespace HikariEditor
             ContentDialog dialog = new();
             NewFolder content = new();
             dialog.XamlRoot = this.Content.XamlRoot;
-            dialog.Title = "フォルダー作成";
+            dialog.Title = "New Folder";
             dialog.PrimaryButtonText = "OK";
             dialog.DefaultButton = ContentDialogButton.Primary;
             dialog.Content = content;
@@ -228,7 +228,7 @@ namespace HikariEditor
                 catch (IOException err)
                 {
                     Debug.WriteLine(err.Message);
-                    Error.Dialog("エラー", err.Message, Content.XamlRoot);
+                    Error.Dialog("File Already Exists", err.Message, Content.XamlRoot);
                     return;
                 }
             }
@@ -240,7 +240,7 @@ namespace HikariEditor
                 }
                 catch (IOException err)
                 {
-                    Error.Dialog("例外: 入出力エラー", err.Message, mainWindow!.Content.XamlRoot);
+                    Error.Dialog("Folder Already Exists", err.Message, mainWindow!.Content.XamlRoot);
                 }
             }
             else

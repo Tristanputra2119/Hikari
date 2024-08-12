@@ -13,7 +13,7 @@
 
   <Properties>
     <DisplayName>HikariEditor</DisplayName>
-    <PublisherDisplayName>Asahi</PublisherDisplayName>
+    <PublisherDisplayName>Hikari</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

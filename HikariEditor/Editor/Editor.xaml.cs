@@ -85,7 +85,7 @@ namespace HikariEditor
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Base64 エンコードができません");
+                Debug.WriteLine("Base64 Error?");
                 Debug.WriteLine(e);
                 return "";
             }
@@ -93,16 +93,7 @@ namespace HikariEditor
             return Encoding.UTF8.GetString(b64bytes);
         }
 
-        //static void TabViewAddTabButtonClick(TabView sender, object args)
-        //{
-        //    TabViewItem newTab = new();
-        //    newTab.IconSource = new SymbolIconSource() { Symbol = Symbol.Document };
-        //    newTab.Header = "Untitled";
-        //    Frame frame = new();
-        //    newTab.Content = frame;
-        //    newTab.IsSelected = true;
-        //    sender.TabItems.Add(newTab);
-        //}
+    
 
         private void TabViewCloseTab(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
@@ -153,17 +144,7 @@ namespace HikariEditor
             Tabs1.Add(fileName);
         }
 
-        //static string Str2MD5(string src)
-        //{
-        //    byte[] srcBytes = Encoding.UTF8.GetBytes(src);
-        //    string MD5src;
-        //    byte[] MD5srcBytes = MD5.HashData(srcBytes);
-        //    StringBuilder sb = new();
-        //    for (int i = 0; i < MD5srcBytes.Length; i++)
-        //        sb.Append(MD5srcBytes[i].ToString("x2"));
-        //    MD5src = sb.ToString();
-        //    return MD5src;
-        //}
+       
 
         async Task Server()
         {
@@ -261,7 +242,7 @@ namespace HikariEditor
                     Debug.WriteLine(e.Message);
                     return;
                 }
-                string log = $"=== 読み込み: {fileName} ===\n";
+                string log = $"=== : {fileName} ===\n";
                 log += src;
                 log += "\n======";
                 Debug.WriteLine(log);

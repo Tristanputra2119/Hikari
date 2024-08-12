@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <TextBlock Text="ファイル名を入力してください" Margin="0, 0, 0, 8"/>
+        <TextBlock Text="Please enter the file name ending with.txt" Margin="0, 0, 0, 8"/>
         <TextBox x:Name="fileName" x:FieldModifier="Public" />
     </StackPanel>
 </Page>
