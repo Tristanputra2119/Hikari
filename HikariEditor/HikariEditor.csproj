@@ -25,7 +25,7 @@
     
     <PackageIcon>Icon.png</PackageIcon>
     <ApplicationIcon>Assets\HikariEditor.ico</ApplicationIcon>
-    <PackageCertificateThumbprint>7B7D83B821ABC8D5EE36E2F86A8270943FDE430D</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>BE3EC18C6F59E0CD8ECD05C8B6C86C4894FAE65C</PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
@@ -42,6 +42,8 @@
     <StartupObject>HikariEditor.Program</StartupObject>
     
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    
+    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="About.xaml" />

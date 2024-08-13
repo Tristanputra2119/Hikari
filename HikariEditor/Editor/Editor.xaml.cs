@@ -29,6 +29,7 @@ namespace HikariEditor
             public string Top { readonly get => top; set => top = value; }
             public string Body { readonly get => body; set => body = value; }
         }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             MainWindow = e.Parameter as MainWindow;
@@ -44,7 +45,7 @@ namespace HikariEditor
 
         async public void CallPasteFunction(string text)
         {
-            // 貼付機能
+            // Paste function
             TabViewItem tab = (TabViewItem)Tabs.SelectedItem;
             if (tab == null) return;
             EditorUnit? editorUnit = tab.Content as EditorUnit;
@@ -57,7 +58,7 @@ namespace HikariEditor
 
         async public void CallCopyFunction()
         {
-            // コピー機能
+            // Copy function
             TabViewItem tab = (TabViewItem)Tabs.SelectedItem;
             EditorUnit? editorUnit = tab.Content as EditorUnit;
             WebView2 webView = editorUnit!.WebView;
@@ -93,8 +94,6 @@ namespace HikariEditor
             return Encoding.UTF8.GetString(b64bytes);
         }
 
-    
-
         private void TabViewCloseTab(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
             Tabs1.Remove(args.Tab.Name);
@@ -116,7 +115,6 @@ namespace HikariEditor
 
         public void AddTab(string fileName, string shortFileName)
         {
-            
             if (Tabs1.Contains(fileName))
             {
                 TabViewItem tab = (TabViewItem)Tabs.FindName(fileName);
@@ -144,8 +142,6 @@ namespace HikariEditor
             Tabs1.Add(fileName);
         }
 
-       
-
         async Task Server()
         {
             IPAddress ipaddr = IPAddress.Parse("127.0.0.1");
@@ -163,10 +159,9 @@ namespace HikariEditor
 
                 string commands = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
 
-               
                 if (commands[0..4] == "POST")
                 {
-                    //PostInfo postInfo = new PostInfo();
+                    // PostInfo postInfo = new PostInfo();
                     PostInfo postInfo = ReadPost(commands);
                     string top = postInfo.Top;
                     string body = postInfo.Body;
@@ -174,14 +169,13 @@ namespace HikariEditor
                     Debug.WriteLine(body);
                     string[] data = top.Split(' ');
 
-                    
                     string parameter = data[1];
                     string pattern = @"^/\?data=(.*)$";
                     Match match = Regex.Match(parameter, pattern);
                     if (match.Success)
                     {
                         string b64Command = match.Groups[1].Value;
-                        /* パラメータのデコード */
+                        /* Decode parameter */
                         string httpCommand = Base642Str(b64Command);
 
                         FileSave(body, httpCommand);
@@ -189,7 +183,6 @@ namespace HikariEditor
                         CopyClipboard(httpCommand);
                     }
 
-                    
                     FileOpen(parameter, stream);
                 }
             }
@@ -238,7 +231,7 @@ namespace HikariEditor
                 catch (Exception e)
                 {
                     Debug.WriteLine(fileName);
-                    Debug.WriteLine("ファイルを読み込めませんでした。");
+                    Debug.WriteLine("Could not read the file.");
                     Debug.WriteLine(e.Message);
                     return;
                 }
@@ -266,7 +259,7 @@ namespace HikariEditor
                 Debug.WriteLine($"=== {fileItem.Name} ===\n{srcCode}\n===");
                 fileItem.Save(srcCode, MainWindow!.NLBtn.Content.ToString());
                 MainWindow.StatusBar.Text = $"{fileItem.Name} Saved";
-                LogPage.AddLog(MainWindow, $"{fileItem.Name} を保存しました。");
+                LogPage.AddLog(MainWindow, $"{fileItem.Name} has been saved.");
                 Counter++;
                 DelayResetStatusBar(1000);
                 if (fileItem.Extension == ".tex")
@@ -291,10 +284,10 @@ namespace HikariEditor
                 string srcCode = Base642Str(body);
                 if (!MainWindow!.AutoSave.IsChecked)
                     return;
-                Debug.WriteLine($"=== 自動保存: {fileItem.Name} ===\n{srcCode}\n===");
+                Debug.WriteLine($"=== Auto Save: {fileItem.Name} ===\n{srcCode}\n===");
                 fileItem.Save(srcCode, MainWindow.NLBtn.Content.ToString());
-                MainWindow.StatusBar.Text = $"{fileItem.Name} を自動保存しました。";
-                LogPage.AddLog(MainWindow, $"{fileItem.Name} を自動保存しました。");
+                MainWindow.StatusBar.Text = $"{fileItem.Name} auto-saved.";
+                LogPage.AddLog(MainWindow, $"{fileItem.Name} has been auto-saved.");
                 Counter++;
                 DelayResetStatusBar(1000);
             }
