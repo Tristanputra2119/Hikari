@@ -22,7 +22,7 @@ Before you begin, make sure you have installed the following:
 - **Segoe Fluent Fonts**
   - If you are using Windows 10, you need to install the [Segoe Fluent](https://aka.ms/SegoeFluentIcons) font. If you are using Windows 11, this font is already available in the system.
 
-- **Visual Studio 2022**
+- **Visual Studio 2022/2019**
   - Ensure that you have installed the Windows Application Development and .NET Desktop Development workloads.  
 
 - **Developer Options**
